@@ -1,5 +1,5 @@
 module.exports = {
-  parser: 'espree', // Default JavaScript parser, no Babel required
+  parser: 'espree',
   env: {
     browser: true,
     es2021: true,
