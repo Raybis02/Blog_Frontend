@@ -1,35 +1,26 @@
 module.exports = {
+  parser: 'espree', // Default JavaScript parser, no Babel required
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
   extends: [
-    'airbnb',
+    'eslint:recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
   ],
-  parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 12,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
-  env: {
-    browser: true,
-    node: true,
-    es2020: true,
-  },
+  plugins: ['react', 'jsx-a11y', 'prettier'],
   rules: {
-    'indent': ['error', 2],
-    'react/jsx-indent': ['error', 2],
-    'react/jsx-indent-props': ['error', 2],
+    'prettier/prettier': 'error',
+    'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
-    'no-console': 'warn',
-    'prettier/prettier': ['error', {
-      'singleQuote': true,
-      'semi': true,
-      'trailingComma': 'all',
-      'printWidth': 80,
-    }],
-    'react/button-has-type': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
+    'react/jsx-no-target-blank': 'off',
   },
 };
