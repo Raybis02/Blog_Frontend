@@ -23,4 +23,9 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': 'off',
     'react/jsx-no-target-blank': 'off',
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 };
