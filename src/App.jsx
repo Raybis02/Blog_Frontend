@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import Blog from './components/Blog';
+import LoggedInfo from './components/loggedInfo';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -52,9 +53,15 @@ function App() {
     }
   };
 
+  const handleLogout = (event) => {
+    event.preventDefault();
+    window.localStorage.removeItem('loggedBlogappUser');
+    setUser(null);
+  };
+
   if (!user) {
     return (
-      <div>
+      <div className="login-page">
         <LoginForm
           username={username}
           setUsername={setUsername}
@@ -67,10 +74,10 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="logged-in">
       <div>
         <h1>Blogs</h1>
-        <h2>Logged in as {user.name}</h2>
+        <LoggedInfo user={user} handleLogout={handleLogout} />
       </div>
       <div>
         <ul>

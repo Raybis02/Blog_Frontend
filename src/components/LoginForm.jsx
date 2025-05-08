@@ -6,9 +6,9 @@ const LoginForm = ({
   setPassword,
 }) => {
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} className="LoginForm">
       <div>
-        username
+        username:
         <input
           placeholder="username"
           type="text"
@@ -18,7 +18,7 @@ const LoginForm = ({
         />
       </div>
       <div>
-        password
+        password:
         <input
           placeholder="password"
           type="password"
