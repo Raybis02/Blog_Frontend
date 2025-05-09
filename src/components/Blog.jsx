@@ -1,7 +1,9 @@
 const Blog = ({ blog }) => {
   return (
     <li className="blog">
-      Title: {blog.title} | Author: {blog.author} | likes: {blog.likes}
+      <em>Title</em>: <strong>{blog.title}</strong> | <em>Author:</em>{' '}
+      <strong>{blog.author}</strong> | <em>Likes:</em>{' '}
+      <strong>{blog.likes}</strong>
     </li>
   );
 };

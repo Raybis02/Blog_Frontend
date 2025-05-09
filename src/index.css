@@ -27,8 +27,10 @@ p {
 }
 
 ul {
-  text-align: left;
   margin-left: -15px;
+  font-size: 17px;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
