@@ -1,4 +1,4 @@
-const loggedInfo = ({ user, handleLogout }) => {
+const LoggedInfo = ({ user, handleLogout }) => {
   return (
     <div>
       <p>Logged in as {user.name}</p>
@@ -11,4 +11,4 @@ const loggedInfo = ({ user, handleLogout }) => {
   );
 };
 
-export default loggedInfo;
+export default LoggedInfo;

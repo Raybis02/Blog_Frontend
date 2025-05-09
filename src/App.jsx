@@ -4,13 +4,17 @@ import LoginForm from './components/LoginForm';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import Blog from './components/Blog';
-import LoggedInfo from './components/loggedInfo';
+import LoggedInfo from './components/LoggedInfo';
+import CreateForm from './components/CreateForm';
 
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -59,16 +63,37 @@ function App() {
     setUser(null);
   };
 
+  const handleBlog = async (event) => {
+    event.preventDefault();
+    const newBlog = {
+      title: title,
+      author: author,
+      url: url,
+    };
+    try {
+      const returnedBlog = await blogService.create(newBlog);
+      setBlogs(blogs.concat(returnedBlog));
+      setAuthor('');
+      setTitle('');
+      setUrl('');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!user) {
     return (
       <div className="login-page">
-        <LoginForm
-          username={username}
-          setUsername={setUsername}
-          handleLogin={handleLogin}
-          password={password}
-          setPassword={setPassword}
-        />
+        <h2>Log in to access page</h2>
+        <div>
+          <LoginForm
+            username={username}
+            setUsername={setUsername}
+            handleLogin={handleLogin}
+            password={password}
+            setPassword={setPassword}
+          />
+        </div>
       </div>
     );
   }
@@ -78,6 +103,17 @@ function App() {
       <div>
         <h1>Blogs</h1>
         <LoggedInfo user={user} handleLogout={handleLogout} />
+      </div>
+      <div>
+        <CreateForm
+          blogHandler={handleBlog}
+          title={title}
+          author={author}
+          url={url}
+          setTitle={setTitle}
+          setAuthor={setAuthor}
+          setUrl={setUrl}
+        />
       </div>
       <div>
         <ul>
