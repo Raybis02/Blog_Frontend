@@ -6,6 +6,7 @@ import loginService from './services/login';
 import Blog from './components/Blog';
 import LoggedInfo from './components/LoggedInfo';
 import CreateForm from './components/CreateForm';
+import Notification from './components/Notification';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -15,6 +16,8 @@ function App() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const [message, setMessage] = useState(null);
+  const [color, setColor] = useState(null);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -52,8 +55,18 @@ function App() {
       setUser(user);
       setUsername('');
       setPassword('');
+      setMessage('Logged in succesfully');
+      setColor('green');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
     } catch (exception) {
       console.log(exception);
+      setMessage('Login unsuccessful: Wrong Username or Password');
+      setColor('red');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
     }
   };
 
@@ -61,6 +74,11 @@ function App() {
     event.preventDefault();
     window.localStorage.removeItem('loggedBlogappUser');
     setUser(null);
+    setMessage('Logged out succesfully');
+    setColor('green');
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
   };
 
   const handleBlog = async (event) => {
@@ -73,11 +91,21 @@ function App() {
     try {
       const returnedBlog = await blogService.create(newBlog);
       setBlogs(blogs.concat(returnedBlog));
+      setMessage(`Blog '${title}' from ${author} created succesfully`);
+      setColor('green');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
       setAuthor('');
       setTitle('');
       setUrl('');
     } catch (error) {
       console.log(error);
+      setMessage('All Fields need a Value');
+      setColor('red');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
     }
   };
 
@@ -85,6 +113,7 @@ function App() {
     return (
       <div className="login-page">
         <h2>Log in to access page</h2>
+        <Notification message={message} color={color} />
         <div>
           <LoginForm
             username={username}
@@ -102,6 +131,7 @@ function App() {
     <div className="logged-in">
       <div>
         <h1>Blogs</h1>
+        <Notification message={message} color={color} />
         <LoggedInfo user={user} handleLogout={handleLogout} />
       </div>
       <div>
