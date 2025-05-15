@@ -34,7 +34,7 @@ ul {
 }
 
 button {
-  width: 100px;
+  width: 120px;
   height: 40px;
   text-align: center;
   border-radius: 8px;
@@ -48,6 +48,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s, font-weight 0.1s;
   box-sizing: border-box;
+  white-space: nowrap;
 }
 
 button:hover {
@@ -92,6 +93,11 @@ button:focus-visible {
   border-color: #40916c;
 }
 
+.CreateForm {
+  width: 100%;
+  max-width: 500px;
+}
+
 .CreateForm form {
   display: flex;
   justify-content: center;
@@ -101,7 +107,7 @@ button:focus-visible {
 }
 
 .CreateForm input {
-  width: 200%;
+  width: 100%;
   max-width: 500px;
   padding: 0.5em;
   border: 1px solid #ccc;
@@ -132,4 +138,8 @@ button:focus-visible {
   background-color: #f8d7da;
   color: #8b0000;
   border-color: #8b0000;
+}
+
+.toggle button {
+  margin-top: 5px;
 }
