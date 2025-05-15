@@ -13,9 +13,6 @@ function App() {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
   const [message, setMessage] = useState(null);
   const [color, setColor] = useState(null);
 
@@ -81,24 +78,17 @@ function App() {
     }, 5000);
   };
 
-  const handleBlog = async (event) => {
-    event.preventDefault();
-    const newBlog = {
-      title: title,
-      author: author,
-      url: url,
-    };
+  const addBlog = async (blogObject) => {
     try {
-      const returnedBlog = await blogService.create(newBlog);
+      const returnedBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(returnedBlog));
-      setMessage(`Blog '${title}' from ${author} created succesfully`);
+      setMessage(
+        `Blog '${blogObject.title}' from ${blogObject.author} created succesfully`,
+      );
       setColor('green');
       setTimeout(() => {
         setMessage(null);
       }, 5000);
-      setAuthor('');
-      setTitle('');
-      setUrl('');
     } catch (error) {
       console.log(error);
       setMessage('All Fields need a Value');
@@ -135,15 +125,7 @@ function App() {
         <LoggedInfo user={user} handleLogout={handleLogout} />
       </div>
       <div>
-        <CreateForm
-          blogHandler={handleBlog}
-          title={title}
-          author={author}
-          url={url}
-          setTitle={setTitle}
-          setAuthor={setAuthor}
-          setUrl={setUrl}
-        />
+        <CreateForm handleBlog={addBlog} />
       </div>
       <div>
         <ul>
