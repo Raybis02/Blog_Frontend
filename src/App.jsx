@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import LoginForm from './components/LoginForm';
 import blogService from './services/blogs';
@@ -7,6 +7,7 @@ import Blog from './components/Blog';
 import LoggedInfo from './components/LoggedInfo';
 import CreateForm from './components/CreateForm';
 import Notification from './components/Notification';
+import Toggle from './components/Toggle';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -15,6 +16,8 @@ function App() {
   const [blogs, setBlogs] = useState([]);
   const [message, setMessage] = useState(null);
   const [color, setColor] = useState(null);
+
+  const blogFormRef = useRef();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -80,6 +83,7 @@ function App() {
 
   const addBlog = async (blogObject) => {
     try {
+      blogFormRef.current.toggleVisibility();
       const returnedBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(returnedBlog));
       setMessage(
@@ -125,7 +129,9 @@ function App() {
         <LoggedInfo user={user} handleLogout={handleLogout} />
       </div>
       <div>
-        <CreateForm handleBlog={addBlog} />
+        <Toggle buttonLabel="add Blog" ref={blogFormRef}>
+          <CreateForm handleBlog={addBlog} />
+        </Toggle>
       </div>
       <div>
         <ul>
