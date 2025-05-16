@@ -1,7 +1,19 @@
 import { useState } from 'react';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, handleLike }) => {
   const [view, setView] = useState(false);
+
+  const addLike = (event) => {
+    event.preventDefault();
+    handleLike({
+      user: blog.user.id,
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+      id: blog.id,
+    });
+  };
 
   if (!view) {
     return (
@@ -32,8 +44,12 @@ const Blog = ({ blog }) => {
               <em>Author:</em> <strong>{blog.author}</strong>
             </li>
             <li>
-              <em>Likes:</em> <strong>{blog.likes}</strong>{' '}
-              <button className="like">like</button>
+              <form onSubmit={addLike}>
+                <em>Likes:</em> <strong>{blog.likes}</strong>{' '}
+                <button className="like" type="submit">
+                  like
+                </button>
+              </form>
             </li>
           </ul>
           <button className="hide" onClick={() => setView(false)}>

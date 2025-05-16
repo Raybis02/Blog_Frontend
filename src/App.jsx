@@ -31,8 +31,9 @@ function App() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const initialNotes = await blogService.getAll();
-        setBlogs(initialNotes);
+        const initialBlogs = await blogService.getAll();
+        const sortedBlogs = initialBlogs.sort((a, b) => b.likes - a.likes);
+        setBlogs(sortedBlogs);
       } catch (error) {
         console.error('Failed to fetch blogs:', error);
       }
@@ -103,6 +104,27 @@ function App() {
     }
   };
 
+  const handleLike = async (blogObject) => {
+    try {
+      await blogService.send(blogObject);
+      const initialBlogs = await blogService.getAll();
+      const sortedBlogs = initialBlogs.sort((a, b) => b.likes - a.likes);
+      setBlogs(sortedBlogs);
+      setMessage('Like succesful');
+      setColor('green');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch (error) {
+      console.log(error);
+      setMessage('Like unsuccesful');
+      setColor('red');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
+
   if (!user) {
     return (
       <div className="login-page">
@@ -136,7 +158,7 @@ function App() {
       <div>
         <ul>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} handleLike={handleLike} />
           ))}
         </ul>
       </div>
