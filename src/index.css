@@ -144,7 +144,7 @@ button:focus-visible {
   margin-top: 5px;
 }
 
-.view, .like, .hide {
+.view, .like, .hide, .delete {
   width: auto;
   max-width: 76.3px;
   height: auto;
@@ -155,6 +155,13 @@ button:focus-visible {
 .view:hover, .like:hover, .hide:hover {
   border-color: #006400;
   color: #006400;
+  font-weight: 500;
+  border-width: 1px;
+}
+
+.delete:hover {
+  border-color: #8b0000;
+  color: #8b0000;
   font-weight: 500;
   border-width: 1px;
 }

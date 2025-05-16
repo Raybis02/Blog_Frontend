@@ -125,6 +125,27 @@ function App() {
     }
   };
 
+  const handleDelete = async (blogId) => {
+    try {
+      await blogService.remove(blogId);
+      const afterDelete = await blogService.getAll();
+      const sortedBlogs = afterDelete.sort((a, b) => b.likes - a.likes);
+      setBlogs(sortedBlogs);
+      setMessage('Delete succesful');
+      setColor('green');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    } catch (error) {
+      console.log(error);
+      setMessage('failed to delete');
+      setColor('red');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+  };
+
   if (!user) {
     return (
       <div className="login-page">
@@ -158,7 +179,13 @@ function App() {
       <div>
         <ul>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} handleLike={handleLike} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              handleLike={handleLike}
+              userVerification={user.username}
+              handleDelete={handleDelete}
+            />
           ))}
         </ul>
       </div>

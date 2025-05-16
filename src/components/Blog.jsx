@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Blog = ({ blog, handleLike }) => {
+const Blog = ({ blog, handleLike, userVerification, handleDelete }) => {
   const [view, setView] = useState(false);
 
   const addLike = (event) => {
@@ -13,6 +13,11 @@ const Blog = ({ blog, handleLike }) => {
       likes: blog.likes + 1,
       id: blog.id,
     });
+  };
+
+  const removeBlog = (event) => {
+    event.preventDefault();
+    handleDelete(blog.id);
   };
 
   if (!view) {
@@ -29,7 +34,40 @@ const Blog = ({ blog, handleLike }) => {
     );
   }
 
-  if (view) {
+  if (view && userVerification === blog.user.username) {
+    return (
+      <div className="blog">
+        <li>
+          <ul className="expand">
+            <li>
+              <em>Title</em>: <strong>{blog.title}</strong>
+            </li>
+            <li>
+              <em>url:</em> <strong>{blog.url}</strong>
+            </li>
+            <li>
+              <em>Author:</em> <strong>{blog.author}</strong>
+            </li>
+            <li>
+              <form onSubmit={addLike}>
+                <em>Likes:</em> <strong>{blog.likes}</strong>{' '}
+                <button className="like" type="submit">
+                  like
+                </button>
+              </form>
+            </li>
+          </ul>
+          <button className="hide" onClick={() => setView(false)}>
+            hide
+          </button>
+          <button className="delete" onClick={removeBlog}>
+            delete
+          </button>
+        </li>
+        <hr />
+      </div>
+    );
+  } else {
     return (
       <div className="blog">
         <li>
