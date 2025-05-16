@@ -17,7 +17,9 @@ const Blog = ({ blog, handleLike, userVerification, handleDelete }) => {
 
   const removeBlog = (event) => {
     event.preventDefault();
-    handleDelete(blog.id);
+    if (window.confirm(`Delete blog "${blog.title}" by ${blog.author}?`)) {
+      handleDelete(blog.id);
+    }
   };
 
   if (!view) {
