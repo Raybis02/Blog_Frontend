@@ -143,3 +143,36 @@ button:focus-visible {
 .toggle button {
   margin-top: 5px;
 }
+
+.view, .like, .hide {
+  width: auto;
+  max-width: 76.3px;
+  height: auto;
+  margin: 3px 5px ;
+  padding: 5px 10px;
+}
+
+.view:hover, .like:hover, .hide:hover {
+  border-color: #006400;
+  color: #006400;
+  font-weight: 500;
+  border-width: 1px;
+}
+
+hr {
+  border-top: 3px dashed #7a7a7aea;
+  background: none;
+  width: 100px;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  margin-left: -30px;
+}
+.expand {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+.hide {
+  margin-left: 0;
+}
