@@ -172,7 +172,7 @@ function App() {
         <LoggedInfo user={user} handleLogout={handleLogout} />
       </div>
       <div>
-        <Toggle buttonLabel="add Blog" ref={blogFormRef}>
+        <Toggle ref={blogFormRef} buttonLabel="add Blog">
           <CreateForm handleBlog={addBlog} />
         </Toggle>
       </div>
