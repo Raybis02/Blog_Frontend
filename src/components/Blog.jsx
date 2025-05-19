@@ -26,7 +26,7 @@ const Blog = ({ blog, handleLike, userVerification, handleDelete }) => {
     return (
       <div className="blog">
         <li>
-          <strong>{blog.title}</strong>
+          <strong>{blog.title}</strong> | <strong>{blog.author}</strong>
           <button className="view" onClick={() => setView(true)}>
             expand
           </button>
