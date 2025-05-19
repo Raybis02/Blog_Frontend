@@ -4,12 +4,14 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    'vitest-globals/env': true,
   },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
+    'plugin:vitest-globals/recommended',
   ],
   parserOptions: {
     ecmaVersion: 12,
