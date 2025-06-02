@@ -13,6 +13,7 @@ const LoginForm = ({
         <div>
           username:
           <input
+            data-testid="username"
             placeholder="username"
             type="text"
             value={username}
@@ -23,6 +24,7 @@ const LoginForm = ({
         <div>
           password:
           <input
+            data-testid="password"
             placeholder="password"
             type="password"
             value={password}
