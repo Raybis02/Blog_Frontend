@@ -85,8 +85,10 @@ function App() {
   const addBlog = async (blogObject) => {
     try {
       blogFormRef.current.toggleVisibility();
-      const returnedBlog = await blogService.create(blogObject);
-      setBlogs(blogs.concat(returnedBlog));
+      await blogService.create(blogObject);
+      const allBlogs = await blogService.getAll();
+      const sortedBlogs = allBlogs.sort((a, b) => b.likes - a.likes);
+      setBlogs(sortedBlogs);
       setMessage(
         `Blog '${blogObject.title}' from ${blogObject.author} created succesfully`,
       );
