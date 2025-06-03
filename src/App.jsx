@@ -176,7 +176,7 @@ function App() {
           <CreateForm handleBlog={addBlog} />
         </Toggle>
       </div>
-      <div>
+      <div className="blogList">
         <ul>
           {blogs.map((blog) => (
             <Blog

@@ -24,6 +24,7 @@ const CreateForm = ({ handleBlog }) => {
         <div>
           title:
           <input
+            data-testid="title"
             type="text"
             placeholder="title"
             value={title}
@@ -34,6 +35,7 @@ const CreateForm = ({ handleBlog }) => {
         <div>
           author:
           <input
+            data-testid="author"
             type="text"
             placeholder="author"
             value={author}
@@ -44,6 +46,7 @@ const CreateForm = ({ handleBlog }) => {
         <div>
           url:
           <input
+            data-testid="url"
             type="text"
             placeholder="url"
             value={url}
