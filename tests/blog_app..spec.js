@@ -21,13 +21,13 @@ test.describe('Blog app', () => {
 
   test.describe('Login', () => {
     test('succeeds with correct credentials', async ({ page }) => {
-      loginWith(page, 'Universe', 'steven');
+      await loginWith(page, 'Universe', 'steven');
 
       await expect(page.getByText('Logged in as Steven')).toBeVisible();
     });
 
     test('fails with wrong credentials', async ({ page }) => {
-      loginWith(page, 'Universe', 'wrong');
+      await loginWith(page, 'Universe', 'wrong');
       const errorDiv = await page.locator('.notification.error');
       await expect(errorDiv).toContainText(
         'Login unsuccessful: Wrong Username or Password',
@@ -37,8 +37,8 @@ test.describe('Blog app', () => {
 
   test.describe('When logged in', () => {
     test.beforeEach(async ({ page }) => {
-      loginWith(page, 'Universe', 'steven');
-      addBlog(page, 'test title', 'test author', 'test url');
+      await loginWith(page, 'Universe', 'steven');
+      await addBlog(page, 'test title', 'test author', 'test url');
     });
 
     test('a new blog can be created', async ({ page }) => {
@@ -66,6 +66,24 @@ test.describe('Blog app', () => {
       await page.getByText('delete').click();
       const blogsDiv = await page.locator('.blogList');
       await expect(blogsDiv).not.toContainText('test title');
+    });
+
+    test('delete button invisible for other user', async ({
+      page,
+      request,
+    }) => {
+      await request.post('/api/users', {
+        data: {
+          name: 'Levi',
+          username: 'Levi',
+          password: 'levi',
+        },
+      });
+      await page.getByText('Logout').click();
+      await loginWith(page, 'Levi', 'levi');
+      await page.getByText('expand').click();
+      const blogDiv = await page.locator('.blog');
+      await expect(blogDiv).not.toContainText('delete');
     });
   });
 });
