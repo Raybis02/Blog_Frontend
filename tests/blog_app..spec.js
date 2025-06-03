@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { loginWith } = require('./helper');
+const { loginWith, addBlog } = require('./helper');
 const { describe } = require('node:test');
 
 test.describe('Blog app', () => {
@@ -39,17 +39,21 @@ test.describe('Blog app', () => {
   test.describe('When logged in', () => {
     test.beforeEach(async ({ page }) => {
       loginWith(page, 'Universe', 'steven');
+      addBlog(page, 'test title', 'test author', 'test url');
     });
 
     test('a new blog can be created', async ({ page }) => {
-      await page.getByText('add blog').click();
-      await page.getByTestId('title').fill('test title');
-      await page.getByTestId('author').fill('test author');
-      await page.getByTestId('url').fill('test url');
-      await page.getByText('create').click();
+      const blogsDiv = await page.locator('.blogList');
+      await expect(blogsDiv).toContainText('test title');
+    });
 
-      const blogDiv = page.locator('.blogList');
-      await expect(blogDiv).toContainText('test title');
+    test('a blog can be liked', async ({ page }) => {
+      await page.getByText('expand').click();
+      const blogDiv = await page.locator('.blog');
+      await expect(blogDiv).toContainText('Likes: 0');
+      await page.locator('.like').click();
+      // const blogDiv2 = await page.locator('.blog');
+      await expect(blogDiv).toContainText('Likes: 1');
     });
   });
 });
