@@ -9,7 +9,18 @@ const addBlog = async (page, title, author, url) => {
   await page.getByTestId('title').fill(title);
   await page.getByTestId('author').fill(author);
   await page.getByTestId('url').fill(url);
-  await page.getByText('create').click();
+  await page.getByRole('button', { name: 'create' }).click();
 };
 
-export { loginWith, addBlog };
+const likeBlog = async (blog, amount) => {
+  await blog.getByText('expand').click();
+  for (let i = 0; i < amount; i++) {
+    const currentLikes = i;
+    await blog.locator('.like').click();
+    await blog
+      .getByText(`Likes: ${currentLikes + 1}`)
+      .waitFor({ timeout: 1000 });
+  }
+};
+
+export { loginWith, addBlog, likeBlog };

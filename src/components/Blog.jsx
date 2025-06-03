@@ -42,7 +42,8 @@ const Blog = ({ blog, handleLike, userVerification, handleDelete }) => {
         <li>
           <ul className="expand">
             <li>
-              <em>Title</em>: <strong>{blog.title}</strong>
+              <em>Title</em>:{' '}
+              <strong data-testid="titleText">{blog.title}</strong>
             </li>
             <li>
               <em>url:</em> <strong>{blog.url}</strong>
@@ -52,7 +53,8 @@ const Blog = ({ blog, handleLike, userVerification, handleDelete }) => {
             </li>
             <li>
               <form onSubmit={addLike}>
-                <em>Likes:</em> <strong>{blog.likes}</strong>{' '}
+                <em>Likes:</em>{' '}
+                <strong data-testid="likeCount">{blog.likes}</strong>{' '}
                 <button className="like" type="submit">
                   like
                 </button>
