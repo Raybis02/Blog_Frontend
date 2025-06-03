@@ -1,6 +1,5 @@
 const { test, expect } = require('@playwright/test');
 const { loginWith, addBlog } = require('./helper');
-const { describe } = require('node:test');
 
 test.describe('Blog app', () => {
   test.beforeEach(async ({ page, request }) => {
@@ -52,8 +51,21 @@ test.describe('Blog app', () => {
       const blogDiv = await page.locator('.blog');
       await expect(blogDiv).toContainText('Likes: 0');
       await page.locator('.like').click();
-      // const blogDiv2 = await page.locator('.blog');
       await expect(blogDiv).toContainText('Likes: 1');
+    });
+
+    test('a blog can be deleted', async ({ page }) => {
+      page.on('dialog', async (dialog) => {
+        expect(dialog.type()).toBe('confirm');
+        expect(dialog.message()).toBe(
+          'Delete blog "test title" by test author?',
+        );
+        await dialog.accept();
+      });
+      await page.getByText('expand').click();
+      await page.getByText('delete').click();
+      const blogsDiv = await page.locator('.blogList');
+      await expect(blogsDiv).not.toContainText('test title');
     });
   });
 });
